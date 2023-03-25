@@ -3,11 +3,15 @@ class HashTable {
     this.data = new Array(size);
   }
 
+  // O(1)
+  // adds a key and value in a location (hashed)
   set(key, value) {
     let index = this._hash(key);
     this.data[index] = [String(key), value];
   }
 
+  // O(1)
+  // Gets the value of the provided key (key is hashed in memory(array))
   get(key) {
     let index = this._hash(key);
     console.log(this.data[index]);

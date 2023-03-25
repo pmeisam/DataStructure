@@ -12,6 +12,8 @@ class LinkedList {
     this.size = 1;
   }
 
+  // adds a value to the tail
+  // O(1)
   append(value) {
     let current = new Node(value);
     this.tail.next = current;
@@ -19,6 +21,8 @@ class LinkedList {
     this.size++;
   }
 
+  // prpepends a value to the linkedList
+  // O(1)
   prepend(value) {
     let current = new Node(value);
     current.next = this.head;
@@ -26,6 +30,8 @@ class LinkedList {
     this.size++;
   }
 
+  // inserts a value to desired index
+  // O(n) sometimes O(1)
   insert(index, value) {
     if (index === 0) {
       this.prepend(value);
@@ -44,15 +50,18 @@ class LinkedList {
     this.size++;
   }
 
+  // O(n)
   lookup(index) {
     console.log(this.traverseToIndex(index));
   }
 
+  // removes a value from desired index
+  // O(n)
   remove(index) {
     if (index === 0) {
-        this.head = this.head.next;
-        this.size--;
-        return;
+      this.head = this.head.next;
+      this.size--;
+      return;
     }
     if (index > this.size) {
       index = this.size - 1;
@@ -63,6 +72,8 @@ class LinkedList {
     this.size--;
   }
 
+  // prints a list of the nodes in the linked list in order from tail to head
+  // O(n)
   print() {
     let current = this.head;
     let count = 0;
