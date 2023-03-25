@@ -1,11 +1,6 @@
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.next = null;
-  }
-}
+import Node from "./node.mjs";
 
-class LinkedList {
+class DoublyLinkedList {
   constructor(value) {
     this.head = new Node(value);
     this.tail = this.head;
@@ -16,6 +11,7 @@ class LinkedList {
   // O(1)
   append(value) {
     let current = new Node(value);
+    current.prev = this.tail;
     this.tail.next = current;
     this.tail = current;
     this.size++;
@@ -26,6 +22,7 @@ class LinkedList {
   prepend(value) {
     let current = new Node(value);
     current.next = this.head;
+    this.head.prev = current;
     this.head = current;
     this.size++;
   }
@@ -44,7 +41,9 @@ class LinkedList {
 
     let current = new Node(value);
     let head = this.traverseToIndex(index - 1);
+    head.next.prev = current;
     current.next = head.next;
+    current.prev = head;
     head.next = current;
 
     this.size++;
@@ -60,6 +59,7 @@ class LinkedList {
   remove(index) {
     if (index === 0) {
       this.head = this.head.next;
+      this.head.prev = null;
       this.size--;
       return;
     }
@@ -69,6 +69,9 @@ class LinkedList {
 
     let current = this.traverseToIndex(index - 1);
     current.next = current.next.next;
+    if (current.next) {
+      current.next.prev = current;
+    }
     this.size--;
   }
 
@@ -79,9 +82,9 @@ class LinkedList {
     let count = 0;
     while (current) {
       console.log(
-        `${count}: { ${current.value} : ${
+        `${count}: { ${current.value} : {next: ${
           current.next ? current.next.value : "null"
-        }}`
+        }, prev: ${current.prev ? current.prev.value : "null"}}}`
       );
       current = current.next;
       count++;
@@ -105,7 +108,7 @@ class LinkedList {
   }
 }
 
-let linkedList = new LinkedList(10);
+let linkedList = new DoublyLinkedList(10);
 linkedList.append(12);
 linkedList.append(18);
 
@@ -121,7 +124,7 @@ linkedList.remove(3);
 linkedList.remove(0);
 linkedList.remove(100);
 
-linkedList.append(1);
+// linkedList.append(1);
 
 linkedList.print();
 console.log("size:", linkedList.size);
